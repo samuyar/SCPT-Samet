@@ -1,0 +1,43 @@
+import numpy as np
+from scipy.optimize import minimize
+from math import *
+from matplotlib import pyplot as plt
+
+
+a = 4
+b = 1
+c = 3
+
+def function(x, a, b, c):
+
+    x1 = x[0]
+    x2 = x[1]
+    x3 = x[2]
+
+    d = x1 + 2 - a
+    e = x2**2 + d - x1
+    f = x3**3 + b + c
+    g = c - 10
+
+    sum = d + e + f + g
+    return abs(sum)
+
+
+def rel_x1(x):
+    return x[2] / e - 1
+
+
+x0 = [10, 1, 1]
+
+bounds_x1 = (1, 10)
+bounds_x2 = (1, 10)
+bounds_x3 = (1, 10)
+
+bnds = (bounds_x1, bounds_x2, bounds_x3)
+
+con1 = {'type': 'eq', 'fun': rel_x1}
+cons = con1
+
+sol = minimize(function, x0, args=(a, b, c), method='SLSQP', bounds=bnds, constraints=cons, tol=0.01)
+print(sol)
+print(e)
