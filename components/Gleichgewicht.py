@@ -55,7 +55,7 @@ class Gleichgewicht:
         #self.epsilonS = self.Fs / (As * Es)
 
         # Vereinfachte Berechnung der Stahldehnung, bilinearer Ansatz
-        self.sigmaS = self.Fs / (As)
+        self.sigmaS = self.Fs / As
         self.scrdelam = h3
 
         if self.sigmaS < fy:
