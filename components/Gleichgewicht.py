@@ -55,14 +55,14 @@ class Gleichgewicht:
         #self.epsilonS = self.Fs / (As * Es)
 
         # Vereinfachte Berechnung der Stahldehnung, bilinearer Ansatz
-        self.sigmaS = self.Fs / As
+        self.sigmaS = self.Fs / (As)
         self.scrdelam = h3
 
         if self.sigmaS < fy:
             self.epsilonSdelam = self.Fs / (As * Es)
 
         else:
-            self.epsilonSdelam = (fy / Es) + (self.sigmaS - fy) / ((fu - fy) / (epsilonU - epsilonY))
+            self.epsilonSdelam = self.Fs / (As * Es)
 
         self.epsilonS = self.epsilonSdelam
 
