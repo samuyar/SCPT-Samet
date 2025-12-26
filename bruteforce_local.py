@@ -507,7 +507,7 @@ def opti():
               # def_var.d * 0.405, def_var.d * 0.404, def_var.d * 0.403, def_var.d * 0.402, def_var.d * 0.401,
               # def_var.d * 0.40, def_var.d * 0.399, def_var.d * 0.398, def_var.d * 0.397, def_var.d * 0.396,
               # def_var.d * 0.395, def_var.d * 0.394, def_var.d * 0.393, def_var.d * 0.392, def_var.d * 0.391,
-              # def_var.d * 0.39, def_var.d * 0.439, def_var.d * 0.438, def_var.d * 0.437, def_var.d * 0.436,
+              # def_var.d * 0.390, def_var.d * 0.389, def_var.d * 0.388, def_var.d * 0.387, def_var.d * 0.386,
               # def_var.d * 0.385, def_var.d * 0.384, def_var.d * 0.383, def_var.d * 0.382, def_var.d * 0.381,
               # def_var.d * 0.38, def_var.d * 0.379, def_var.d * 0.378, def_var.d * 0.377, def_var.d * 0.376,
               # def_var.d * 0.375, def_var.d * 0.374, def_var.d * 0.373, def_var.d * 0.372, def_var.d * 0.371,

@@ -62,7 +62,7 @@ class Gleichgewicht:
             self.epsilonSdelam = self.Fs / (As * Es)
 
         else:
-            self.epsilonSdelam = self.Fs / (As * Es)
+            self.epsilonSdelam = (fy / Es) + (self.sigmaS - fy) / ((fu - fy) / (epsilonU - epsilonY))
 
         self.epsilonS = self.epsilonSdelam
 
