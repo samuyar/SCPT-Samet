@@ -485,7 +485,9 @@ def opti():
 
     temp = Temp(def_var.yvor, def_var.y1vor, def_var.y2vor, def_var.betavor, def_var.beta1vor, def_var.beta2vor)
 
-    x_list = [#def_var.d * 0.50,
+    x_list = [def_var.d * 0.51,
+              def_var.d * 0.505,
+              def_var.d * 0.50]
               #def_var.d * 0.495,
               #def_var.d * 0.49,
               #def_var.d * 0.485,
@@ -493,7 +495,7 @@ def opti():
               #def_var.d * 0.475,
               #def_var.d * 0.47,
               #def_var.d * 0.465,
-              def_var.d * 0.46]
+              #def_var.d * 0.46,
               # def_var.d * 0.455, def_var.d * 0.454, def_var.d * 0.453, def_var.d * 0.452, def_var.d * 0.451,
               # def_var.d * 0.45, def_var.d * 0.449, def_var.d * 0.448, def_var.d * 0.447, def_var.d * 0.446,
               # def_var.d * 0.445, def_var.d * 0.444, def_var.d * 0.443, def_var.d * 0.442, def_var.d * 0.441,
