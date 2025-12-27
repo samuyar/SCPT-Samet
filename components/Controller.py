@@ -41,6 +41,7 @@ def calculate(variable):
     As = defVar.getAs()  # Fläche der Längsbewehrung [mm^2]
     alpha = defVar.getAlpha()  # Verhältniswert des oberen zum unteren Rissast
     Ne = defVar.getNe()  # Einwirkende Normalkraft
+    interlayers = defVar.getInterlayer() # Liste der Interlayerhöhen
 
     # Vorgegebene Startwerte zu Beginn der Iteration, Variablen werden zum Teil während der Iteration neu belegt
     x0 = defVar.getX0()  # Höhe der Betondruckzone zu Beginn der Iteration
