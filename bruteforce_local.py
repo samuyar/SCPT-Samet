@@ -485,34 +485,32 @@ def opti():
 
     temp = Temp(def_var.yvor, def_var.y1vor, def_var.y2vor, def_var.betavor, def_var.beta1vor, def_var.beta2vor)
 
-    x_list = [def_var.d * 0.61,
-              def_var.d * 0.605,
-              def_var.d * 0.60,
-              def_var.d * 0.595,
-              def_var.d * 0.59,
-              def_var.d * 0.585,
-              def_var.d * 0.58,
-              def_var.d * 0.575,
-	      def_var.d * 0.57,
-              def_var.d * 0.565,
-              def_var.d * 0.56,
-              def_var.d * 0.555,
-              def_var.d * 0.55,
-              def_var.d * 0.545,
-	      def_var.d * 0.54,
-              def_var.d * 0.535,
-              def_var.d * 0.53,
-              def_var.d * 0.525,
-              def_var.d * 0.52,
-              def_var.d * 0.515,
-  	      def_var.d * 0.51,
-	      def_var.d * 0.505,
-	      def_var.d * 0.50,
-              def_var.d * 0.495,
-              def_var.d * 0.49]
-
-
-
+    x_list = [  def_var.d * 0.61,
+                def_var.d * 0.605,
+                def_var.d * 0.60,
+                def_var.d * 0.595,
+                def_var.d * 0.59,
+                def_var.d * 0.585,
+                def_var.d * 0.58,
+                def_var.d * 0.575,
+	            def_var.d * 0.57,
+                def_var.d * 0.565,
+                def_var.d * 0.56,
+                def_var.d * 0.555,
+                def_var.d * 0.55,
+                def_var.d * 0.545,
+	            def_var.d * 0.54,
+                def_var.d * 0.535,
+                def_var.d * 0.53,
+                def_var.d * 0.525,
+                def_var.d * 0.52,
+                def_var.d * 0.515,
+  	            def_var.d * 0.51,
+	            def_var.d * 0.505,
+	            def_var.d * 0.50,
+                def_var.d * 0.495,
+                def_var.d * 0.49
+            ]
 
     for x0_list in x_list:
 
