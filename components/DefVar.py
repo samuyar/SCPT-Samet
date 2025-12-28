@@ -40,7 +40,7 @@ class DefVar:
     def getH(self):
         return self.h
 
-    fcm = 54  # mittlere Betondruckfestigkeit [N/mm²]
+    fcm = 36.9  # mittlere Betondruckfestigkeit [N/mm²]
 
     def getFcm(self):
         return self.fcm
@@ -48,7 +48,7 @@ class DefVar:
     #fct = 0.3 * (fcm - 4) ** (
     #        2 / 3)  # Betonzugfestigkeit aus Betondruckfestigkeit berechnet [N/mm²], evtl. später vom Nutzer auswählabr ob berechneter Wert oder experimentell bestimmter Wert
 
-    fct = 3.03
+    fct = 2.6
 
     def getFct(self):
         return self.fct
@@ -56,7 +56,7 @@ class DefVar:
     #Ec = 22000 * (
     #        0.1 * fcm) ** 0.3  # mittlerer E-Modul aus Betondruckfestigkeit berechnet [N/mm²], evtl später vom Nutzer auswählbar ob berechneter Wert oder experimentell bestimmter Wert
 
-    Ec = 22734
+    Ec = 26800
 
     def getEc(self):
         return self.Ec
@@ -161,17 +161,17 @@ class DefVar:
     def getyvor(self):
         return self.yvor
 
-    betavor = radians(90)
+    betavor = radians(89)
 
     def getBetavor(self):
         return self.betavor
 
-    beta1vor = radians(90)  # Startwert der Rissneigung Abschnitt B, evtl. zu 90° annehmen?
+    beta1vor = radians(89)  # Startwert der Rissneigung Abschnitt B, evtl. zu 90° annehmen?
 
     def getBeta1vor(self):
         return self.beta1vor
 
-    beta2vor = radians(90)  # Startwert der Rissneigung Abschnitt A, evtl zu 90° annehmen?
+    beta2vor = radians(89)  # Startwert der Rissneigung Abschnitt A, evtl zu 90° annehmen?
 
     def getBeta2vor(self):
         return self.beta2vor
