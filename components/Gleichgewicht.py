@@ -54,17 +54,22 @@ class Gleichgewicht:
         # Vereinfachte Berechnung der Stahldehnung, später Berücksichtigung der verschiedener Einflüsse/Anteile auf/der Dehnung ()
         #self.epsilonS = self.Fs / (As * Es)
 
-        # Vereinfachte Berechnung der Stahldehnung, bilinearer Ansatz
-        self.sigmaS = self.Fs / As
+        # Vereinfachte Berechnung der Carbonbewehrung, linearer Ansatz
+        self.epsilonSdelam = self.Fs / (As * Es)
         self.scrdelam = h3
-
-        if self.sigmaS < fy:
-            self.epsilonSdelam = self.Fs / (As * Es)
-
-        else:
-            self.epsilonSdelam = (fy / Es) + (self.sigmaS - fy) / ((fu - fy) / (epsilonU - epsilonY))
-
         self.epsilonS = self.epsilonSdelam
+
+        # Vereinfachte Berechnung der Stahldehnung, bilinearer Ansatz
+        #self.sigmaS = self.Fs / As
+        #self.scrdelam = h3
+
+        #if self.sigmaS < fy:
+        #    self.epsilonSdelam = self.Fs / (As * Es)
+
+        #else:
+        #    self.epsilonSdelam = (fy / Es) + (self.sigmaS - fy) / ((fu - fy) / (epsilonU - epsilonY))
+
+        #self.epsilonS = self.epsilonSdelam
 
         # Berechnung der Stahldehnung unter Berücksichtigung der Delamination und des Tension Stiffening
         # Formeln nur gültig für große lambdacs (mit  d*lambdacs > scr)
