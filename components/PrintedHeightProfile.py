@@ -1,4 +1,3 @@
-from math import *
 
 """
 Idee: Es wird die Risshöhe genommen und überprüft, ob es im Interlayer Bereich liegt, falls das der Fall ist werden die Betonwerte
@@ -22,20 +21,13 @@ class PrintedHeightProfile:
     def __init__(self, geometrie):
 
         self.geometrie = geometrie
-
-        print_height = 15 # Druckhöhe je Lage in [mm]
-        max_height = 300 # Bauteilhöhe, der Wert ist nicht wichtig, hauptsache er ist >= der eigentlichen Bauteilhöhe
-        toleranz = 1 # Toleranz zum Treffen der Interlayers in [mm]
-
-        # erzeugt Liste aller Interlayerhöhen von 0 bis max_height alle print.height, hier also [0,15,30,45,...]
-        # + 1 ist nicht die Toleranz hier sondern dafür, dass die letzte Höhe, falls teilbar durch print_height, auch betrachtet wird
-        interlayers = list(range(0, max_height + 1, print_height))
-
-        # überprüft, ob y auf einer der interlayers liegt mit toleranz
-        is_on_interlayer = any(abs(self.y() - h) <= toleranz for h in interlayers)
-
+        self.print_height = 15 # Druckhöhe je Lage in [mm]
+        self.max_height = 300 # Bauteilhöhe, der Wert ist nicht wichtig, hauptsache er ist >= der eigentlichen Bauteilhöhe
+        self.toleranz = 1 # Toleranz zum Treffen der Interlayers in [mm]
 
     def y(self):
         return self.geometrie.y
 
-
+    def is_on_interlayer(self):
+        interlayers = list(range(0, self.max_height + 1, self.print_height)) # interlayer höhen von 0 bis max_height je Druckhöhe
+        return any(abs(self.y() - h) <= self.toleranz for h in interlayers) # überprüft ob y auf einer der interlayer liegt mit toleranz

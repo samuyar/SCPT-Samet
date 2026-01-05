@@ -5,6 +5,7 @@ from components.Kinematik import *
 from components.Konstitutiv import *
 from components.ParameterNeu import *
 from components.Rissfortschritt import *
+from components.PrintedHeightProfile import PrintedHeightProfile
 from math import *
 from scipy.optimize import brute
 
@@ -35,6 +36,9 @@ class Temp:
         self.x_deltaY = []
         self.y_reldeltaY = []
         #self.z_error = []
+
+        # für PrintedHeightProfile
+        self.interlayer_status = False
 
     def get_yvor_share(self):
         return self.yvor_share
@@ -165,6 +169,8 @@ class Temp:
     def get_sigma1_share(self):
         return self.sigma1_share
 
+    def get_interlayer_status(self):
+        return self.interlayer_status
 
 
 
@@ -297,6 +303,8 @@ class Temp:
     def set_sigma1_share(self, new_sigma1):
         self.sigma1_share = new_sigma1
 
+    def set_interlayer_status(self, status):
+        self.interlayer_status = status
 
 
 def calculate(x, temp, x0, yvor, y1vor, y2vor, betavor, beta1vor, beta2vor):
@@ -330,6 +338,9 @@ def calculate(x, temp, x0, yvor, y1vor, y2vor, betavor, beta1vor, beta2vor):
 
     try:
         geometrie = Geometrie(d, yvor, y1vor, y2vor, deltaY, alpha, betavor, beta1vor, beta2vor)
+
+        printed_height_profile = PrintedHeightProfile(geometrie)
+        temp.set_interlayer_status(printed_height_profile.is_on_interlayer())
 
         # Bestimmen des Rissfortschritts des Iterationsschritts
         rissfortschritt = Rissfortschritt(d, geometrie.scr, x0, geometrie.y1, geometrie.y2, beta, phi, fct, fcm,
@@ -471,7 +482,8 @@ def opti():
                                       'rel_beta', 'rel_phi', 'rel_sigma', 'rel_deltaY', 'relN',
                                       'beta_calc', 'phi_calc', 'sigmaz0_calc', 'deltaY_calc',
                                       'wfpz','wbot0', 'wreinf', 'deltabot', 'deltak',
-                                      'epsilons', 'epsiloncr', 'epsilontop', 'tau0', 'sigmax0', 'sigma1'])
+                                      'epsilons', 'epsiloncr', 'epsilontop', 'tau0', 'sigmax0', 'sigma1',
+                                      'is_on_interlayer'])
 
     # Init Params
     def_var = DefVar()
@@ -571,7 +583,8 @@ def opti():
                                 temp.get_deltaY_calc_share(), temp.get_wfpz_share(), temp.get_wbot0_share(),
                                 temp.get_wbot1_share(), temp.get_deltabot_share(), temp.get_deltak_share(),
                                 temp.get_epsilons_share(), temp.get_epsiloncr_share(), temp.get_epsilontop_share(),
-                                temp.get_tau0_share(), temp.get_sigmax0_share(), temp.get_sigma1_share()]
+                                temp.get_tau0_share(), temp.get_sigmax0_share(), temp.get_sigma1_share(),
+                                temp.get_interlayer_status()]
 
         index += 1
         result_df.to_csv('results.csv', index=False)
