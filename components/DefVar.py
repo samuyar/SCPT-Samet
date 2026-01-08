@@ -7,10 +7,10 @@ class DefVar:
     Bisherige Vereinfachung: Einlagige Bewehrung
     """
     # Angaben zum System, Geometrische Grunddaten, Materialkennwerte, Angaben zur Bewehrung und Verhältniswert des Risses
-    lSpann = 2800  # Angabe der Spannweite (Mitte Auflager bis Mitte Auflager) [mm]
+    lSpann = 1440  # Angabe der Spannweite (Mitte Auflager bis Mitte Auflager) [mm]
 
     #a = lSpann / 2  # Halbe Spannweite, evtl. später in Controller direkt oder in Modul Gleichgewicht berechnen?
-    a = 1300
+    a = 720
 
     F = 0  # Einwirkende Einzellast
 
@@ -23,24 +23,24 @@ class DefVar:
     def getNe(self):
         return self.Ne
 
-    d = 300  # statische Nutznöhe [mm]
+    d = 180  # statische Nutznöhe [mm]
 
     def getD(self):
         return self.d
 
     lambdaCS = 2.73  # Ort des erzeugten Risses
 
-    b = 320  # Breite [mm]
+    b = 100  # Breite [mm]
 
     def getB(self):
         return self.b
 
-    h = 350  # Höhe [mm]
+    h = 210  # Höhe [mm]
 
     def getH(self):
         return self.h
 
-    fcm = 36.9  # mittlere Betondruckfestigkeit [N/mm²]
+    fcm = 54.02  # mittlere Betondruckfestigkeit [N/mm²]
 
     def getFcm(self):
         return self.fcm
@@ -48,7 +48,7 @@ class DefVar:
     #fct = 0.3 * (fcm - 4) ** (
     #        2 / 3)  # Betonzugfestigkeit aus Betondruckfestigkeit berechnet [N/mm²], evtl. später vom Nutzer auswählabr ob berechneter Wert oder experimentell bestimmter Wert
 
-    fct = 2.6
+    fct = 3.03
 
     def getFct(self):
         return self.fct
@@ -56,7 +56,7 @@ class DefVar:
     #Ec = 22000 * (
     #        0.1 * fcm) ** 0.3  # mittlerer E-Modul aus Betondruckfestigkeit berechnet [N/mm²], evtl später vom Nutzer auswählbar ob berechneter Wert oder experimentell bestimmter Wert
 
-    Ec = 26800
+    Ec = 22734
 
     def getEc(self):
         return self.Ec
@@ -86,7 +86,7 @@ class DefVar:
     def getEpsilonu(self):
         return self.epsilonu
 
-    dag = 16  # Größtkorndurchmesser [mm]
+    dag = 2  # Größtkorndurchmesser [mm]
 
     def getDag(self):
         return self.dag
@@ -101,7 +101,7 @@ class DefVar:
     def getDs(self):
         return self.ds
 
-    n = 5  # Stabanzahl [-]
+    n = 3  # Stabanzahl [-]
 
     def getN(self):
         return self.n
