@@ -40,11 +40,6 @@ class DefVar:
     def getH(self):
         return self.h
 
-    interlayers = list(range(0,301,15)) # Interlayerhöhen von 0 bis 300 und 15mm je Interlayer
-
-    def getInterlayer(self):
-        return self.interlayers
-
     fcm = 36.9  # mittlere Betondruckfestigkeit [N/mm²]
 
     def getFcm(self):

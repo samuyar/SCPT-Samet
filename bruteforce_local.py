@@ -497,43 +497,19 @@ def opti():
 
     temp = Temp(def_var.yvor, def_var.y1vor, def_var.y2vor, def_var.betavor, def_var.beta1vor, def_var.beta2vor)
 
-    x_list = [def_var.d * 0.51,
-              #def_var.d * 0.505,
-              #def_var.d * 0.50]
-              #def_var.d * 0.495,
-              #def_var.d * 0.49,
-              #def_var.d * 0.485,
-              #def_var.d * 0.48,
-              #def_var.d * 0.475,
-              #def_var.d * 0.47,
-              #def_var.d * 0.465,
-              #def_var.d * 0.46,
-              # def_var.d * 0.455, def_var.d * 0.454, def_var.d * 0.453, def_var.d * 0.452, def_var.d * 0.451,
-              # def_var.d * 0.45, def_var.d * 0.449, def_var.d * 0.448, def_var.d * 0.447, def_var.d * 0.446,
-              # def_var.d * 0.445, def_var.d * 0.444, def_var.d * 0.443, def_var.d * 0.442, def_var.d * 0.441,
-              # def_var.d * 0.44, def_var.d * 0.439, def_var.d * 0.438, def_var.d * 0.437, def_var.d * 0.436,
-              # def_var.d * 0.435, def_var.d * 0.434, def_var.d * 0.433, def_var.d * 0.432, def_var.d * 0.431,
-              # def_var.d * 0.43, def_var.d * 0.429, def_var.d * 0.428, def_var.d * 0.427, def_var.d * 0.426,
-              # def_var.d * 0.425, def_var.d * 0.424, def_var.d * 0.423, def_var.d * 0.422, def_var.d * 0.421,
-              # def_var.d * 0.42, def_var.d * 0.419, def_var.d * 0.418, def_var.d * 0.417, def_var.d * 0.416,
-              # def_var.d * 0.415, def_var.d * 0.414, def_var.d * 0.413, def_var.d * 0.412, def_var.d * 0.411,
-              # def_var.d * 0.41, def_var.d * 0.409, def_var.d * 0.408, def_var.d * 0.407, def_var.d * 0.406,
-              # def_var.d * 0.405, def_var.d * 0.404, def_var.d * 0.403, def_var.d * 0.402, def_var.d * 0.401,
-              # def_var.d * 0.40, def_var.d * 0.399, def_var.d * 0.398, def_var.d * 0.397, def_var.d * 0.396,
-              # def_var.d * 0.395, def_var.d * 0.394, def_var.d * 0.393, def_var.d * 0.392, def_var.d * 0.391,
-              # def_var.d * 0.390, def_var.d * 0.389, def_var.d * 0.388, def_var.d * 0.387, def_var.d * 0.386,
-              # def_var.d * 0.385, def_var.d * 0.384, def_var.d * 0.383, def_var.d * 0.382, def_var.d * 0.381,
-              # def_var.d * 0.38, def_var.d * 0.379, def_var.d * 0.378, def_var.d * 0.377, def_var.d * 0.376,
-              # def_var.d * 0.375, def_var.d * 0.374, def_var.d * 0.373, def_var.d * 0.372, def_var.d * 0.371,
-              # def_var.d * 0.37, def_var.d * 0.369, def_var.d * 0.368, def_var.d * 0.367, def_var.d * 0.366,
-              # def_var.d * 0.365, def_var.d * 0.364, def_var.d * 0.363, def_var.d * 0.362, def_var.d * 0.361,
-              # def_var.d * 0.36, def_var.d * 0.359, def_var.d * 0.358, def_var.d * 0.357, def_var.d * 0.356,
-              # def_var.d * 0.355, def_var.d * 0.354, def_var.d * 0.353, def_var.d * 0.352, def_var.d * 0.351,
-              # def_var.d * 0.35, def_var.d * 0.349, def_var.d * 0.348, def_var.d * 0.347, def_var.d * 0.346,
-              # def_var.d * 0.345, def_var.d * 0.344, def_var.d * 0.343, def_var.d * 0.342, def_var.d * 0.341,
-              # def_var.d * 0.34, def_var.d * 0.339, def_var.d * 0.338, def_var.d * 0.337, def_var.d * 0.336,
-              # def_var.d * 0.335, def_var.d * 0.334, def_var.d * 0.333
-                ]
+    x_list = [
+                def_var.d * 0.620, def_var.d * 0.618, def_var.d * 0.616, def_var.d * 0.614, def_var.d * 0.612,
+                def_var.d * 0.610, def_var.d * 0.608, def_var.d * 0.606, def_var.d * 0.604, def_var.d * 0.602,
+                def_var.d * 0.600, def_var.d * 0.598, def_var.d * 0.596, def_var.d * 0.594, def_var.d * 0.592,
+                def_var.d * 0.590, def_var.d * 0.588, def_var.d * 0.586, def_var.d * 0.584, def_var.d * 0.582,
+                def_var.d * 0.580, def_var.d * 0.578, def_var.d * 0.576, def_var.d * 0.574, def_var.d * 0.572,
+                def_var.d * 0.570, def_var.d * 0.568, def_var.d * 0.566, def_var.d * 0.564, def_var.d * 0.562,
+                def_var.d * 0.560, def_var.d * 0.558, def_var.d * 0.556, def_var.d * 0.554, def_var.d * 0.552,
+                def_var.d * 0.550, def_var.d * 0.548, def_var.d * 0.546, def_var.d * 0.544, def_var.d * 0.542,
+                def_var.d * 0.540, def_var.d * 0.538, def_var.d * 0.536, def_var.d * 0.534, def_var.d * 0.532,
+                def_var.d * 0.530
+
+             ]
 
 
     for x0_list in x_list:
