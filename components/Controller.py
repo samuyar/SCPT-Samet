@@ -6,6 +6,7 @@ from components.Kinematik import *
 from components.Konstitutiv import *
 from components.ParameterNeu import *
 from components.Rissfortschritt import *
+from components.PrintedHeightProfile import *
 from scipy.optimize import minimize
 import math
 # from scipy.optimize import root_scalar
@@ -41,7 +42,6 @@ def calculate(variable):
     As = defVar.getAs()  # Fläche der Längsbewehrung [mm^2]
     alpha = defVar.getAlpha()  # Verhältniswert des oberen zum unteren Rissast
     Ne = defVar.getNe()  # Einwirkende Normalkraft
-    interlayers = defVar.getInterlayer() # Liste der Interlayerhöhen
 
     # Vorgegebene Startwerte zu Beginn der Iteration, Variablen werden zum Teil während der Iteration neu belegt
     x0 = defVar.getX0()  # Höhe der Betondruckzone zu Beginn der Iteration
@@ -61,10 +61,14 @@ def calculate(variable):
     try:
         geometrie = Geometrie(d, yvor, y1vor, y2vor, deltaY, alpha, betavor, beta1vor, beta2vor)
 
+        printed_height_profile = PrintedHeightProfile(geometrie)
+        interlayer_status = printed_height_profile.is_on_interlayer()
+
         # Bestimmen des Rissfortschritts des Iterationsschritts
         rissfortschritt = Rissfortschritt(d, geometrie.scr, x0, geometrie.y1, geometrie.y2, beta, phi, fct, fcm,
                                           Ec,
-                                          sigmaz0)
+                                          sigmaz0,
+                                          interlayer_status)
 
         # Bestimmen der Risskinematik
         kinematik = Kinematik(phi, geometrie.scr, geometrie.y1, geometrie.y2, x0, rissfortschritt.x1,

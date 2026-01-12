@@ -7,7 +7,7 @@ class Rissfortschritt:
     # [mm, N/mm², Bogenmaß]
     """
 
-    def __init__(self, d, scr, x0, y1, y2, beta, phi, fct, fcm, Ec, sigmaZ0):
+    def __init__(self, d, scr, x0, y1, y2, beta, phi, fct, fcm, Ec, sigmaZ0, interlayer_status):
         """
         Initialisierung der Berechnung des Rissfortschritts im Bauteil (=x1) und der dazugörigen Spannungen
         :param d       statische Nutzhöhe - [mm]
@@ -22,6 +22,16 @@ class Rissfortschritt:
         :param Ec      mittlerer E-Modul - [N/mm²]
         :param sigmaZ0 Druckkraft aus Zahnbiegung - [N/mm²]
         """
+
+        #Fügt den Boolean von interlayer_status hinzu
+        self.interlayer_status = interlayer_status
+
+        # wenn interlayer_status == True, dann Interlayer Werte einfügen (erstmal Reduzierung um 10%)
+        if self.interlayer_status:
+            fcm = 0.9 * fcm
+            fct = 0.9 * fct
+            Ec = 0.9 * Ec
+
 
         # Entscheidungfunktion zur Bestimmung von sigma1 in Abhängigkeit von der Lage der Rissspitze (Kupfer'sches Bruchkiterium)
         self.sigma1 = ((1 + 0.8 * sigmaZ0 / fcm * (1 + 1 / (tan(beta) ** 2))) / (
@@ -68,3 +78,6 @@ class Rissfortschritt:
 
     def getAlpha(self):
         return self.alpha
+
+    def get_interlayer_status(self):
+        return self.interlayer_status

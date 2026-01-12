@@ -23,7 +23,7 @@ class PrintedHeightProfile:
         self.geometrie = geometrie
         self.print_height = 15 # Druckhöhe je Lage in [mm]
         self.max_height = 300 # Bauteilhöhe, der Wert ist nicht wichtig, hauptsache er ist >= der eigentlichen Bauteilhöhe
-        self.toleranz = 1 # Toleranz zum Treffen der Interlayers in [mm]
+        self.toleranz = 2 # Toleranz zum Treffen der Interlayers in [mm]
 
     def y(self):
         return self.geometrie.y
