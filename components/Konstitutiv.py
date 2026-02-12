@@ -67,7 +67,9 @@ class Konstitutiv:
         # Integration der Schubspannungen über die Risslänge
         tauAI = quad(tauAi, 0, 1, args=(fcm, delta, phi, r2, y2, beta2, dag))
         tauAI = tauAI[0]   # Erster Wert in Liste tauAI ist das korrekte Ergebnis für das Integral der Schubspannung
-        self.FaiPa = b * l2 * tauAI  # Parallel zum Riss wirkende Kraft
+        cf = 0.8
+        #self.FaiPa = b * l2 * tauAI  # Parallel zum Riss wirkende Kraft
+        self.FaiPa = cf * b * l2 * tauAI  # Parallel zum Riss wirkende Kraft, mit Reduktionsfaktor
 
         # Funktion der Rissspannungen (Aktualisiert 04/12/2021: Rough-Crack Model nach Gambarova & Karakoc (1983))
         def sigmaAi(shi, fcm, delta, phi, r2, y2, beta2, dag):
@@ -85,7 +87,8 @@ class Konstitutiv:
         # Integration der Spannungen über die Risslänge
         sigmaAI = quad(sigmaAi, 0, 1, args=(fcm, delta, phi, r2, y2, beta2, dag))
         sigmaAI = sigmaAI[0]  # Erster Wert in Liste sigmaAI ist das korrekte Ergebnis für das Integral der Spannungen
-        self.FaiOr = sigmaAI * b * l2  # Orthogonal zum Riss wirkende Kraft
+        #self.FaiOr = sigmaAI * b * l2  # Orthogonal zum Riss wirkende Kraft
+        self.FaiOr = cf * sigmaAI * b * l2  # Orthogonal zum Riss wirkende Kraft, mit Reduktionsfaktor
 
         # Bestimmen des Hebelarms zai von FaiOr durch Integration
         def zAi(shi, fcm, delta, phi, r2, y2, beta2, dag):
