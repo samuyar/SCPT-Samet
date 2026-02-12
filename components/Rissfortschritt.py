@@ -28,10 +28,9 @@ class Rissfortschritt:
 
         # wenn interlayer_status == True, dann Interlayer Werte einfügen (erstmal Reduzierung um 10%)
         if self.interlayer_status:
-            fcm = 0.9 * fcm
-            fct = 0.9 * fct
-            Ec = 0.9 * Ec
-
+            fcm = 1.0 * fcm
+            fct = 1.0 * fct
+            Ec = 1.0 * Ec
 
         # Entscheidungfunktion zur Bestimmung von sigma1 in Abhängigkeit von der Lage der Rissspitze (Kupfer'sches Bruchkiterium)
         self.sigma1 = ((1 + 0.8 * sigmaZ0 / fcm * (1 + 1 / (tan(beta) ** 2))) / (

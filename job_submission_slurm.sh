@@ -1,5 +1,6 @@
 #!/usr/local_rwth/bin/zsh
 
+###SBATCH --account=rwth0887
 #SBATCH -p c18m
 
 ### Job name
