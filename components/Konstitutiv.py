@@ -7,43 +7,115 @@ class Konstitutiv:
     def __init__(self, b, d, n, ds, Ec, fct, fcm, dag, phi, y1, y2, wfpz, r2, l2, tau0, sigma1, beta1, beta2,
                  sigmaX0, x0, x1, delta, deltaK, epsilonTop):
 
+        # =========================
+        # Parameter Grenzschichten
+        # =========================
+        p = 15.0  # Abstand der Grenzschichtmitten [mm]
+        t = 2.0  # Grenzschichtdicke [mm]
+        eta = 1.0  # Reduktionsfaktor der Steifigkeit (E-Modul) in Grenzschicht #TEST wenn eta = 1.0, dann sollte es keine Unterschiede geben! (Ja, test passt!)
 
-        # Ungerissene Druckzone
-        self.Vuncr = 2 / 3 * b * tau0 * (
-                    (x0 + x1) + 1 / 2 * ((x1) ** 2 + x0 * x1) / (x0 - x1))  # Querkraft in ungerissener Druckzone
-        self.zuncr = y1 / tan(beta1) + y2 / tan(beta2)  # Hebelarm Vuncr
+        def integrate_with_layers(stammfunktion, a0, a1):
+            """
+            Integriert s(x)*f(x) von a0 bis a1 über Grenzschichten.
+            stammfunktion(x).
+            s(x)=1 außerhalb, s(x)=eta innerhalb der Grenzschichten.
+            """
+            res = 0.0
+            x_cur = a0
 
-        # Zugkräfte
-        self.Fct = 1 / 2 * b * sigmaX0 * x1  # Normalkraft (Zug)
-        self.zct = y1 + y2 + 1 / 3 * x1  # Hebelarm Fct
+            # erste Grenzschichtmitte >= a0
+            k = int(floor(a0 / p)) + 1
 
-      # Druckkraft der ungerissenen Betondruckzone
-      #  ec1 = 2.2/1000
-      #  k = 1.05 * Ec * (ec1 / fcm)
+            while True:
+                c = k * p
+                a = c - t / 2.0
+                bnd = c + t / 2.0
+                if a >= a1:
+                    break
 
-      #  def sigmac(shi, ec1, k, fcm):
-      #      ec = shi * abs(epsilonTop)
-      #      eta = ec / ec1
-      #      return fcm * (k * eta - eta ** 2) / (1 + (k - 2) * eta)
+                aa = max(a0, a)
+                bb = min(a1, bnd)
 
-      #  sigmac = quad(sigmac, 0, 1, args=(ec1, k, fcm))
-      #  sigmac = sigmac[0]
-      #  self.Fcc = abs(b * sigmac * x0)
+                # normaler Bereich bis zur Grenzschicht
+                if aa > x_cur:
+                    res += (stammfunktion(aa) - stammfunktion(x_cur))
 
+                # Grenzschichtbereich
+                if bb > aa:
+                    res += eta * (stammfunktion(bb) - stammfunktion(aa))
 
-        sigmaOK = max([epsilonTop * Ec, -fcm])
-        self.Fcc = abs(
-            1 / 2 * b * sigmaOK * x0)  # Druckkraft in ungerissener Druckzone, hier wurde in der Excel-Tabelle eine Fallunterscheidung in Abhängigkeit von x1 getroffen.
+                x_cur = max(x_cur, bb)
+                k += 1
 
-        # Bestimmung des Hebelarms von Fcc
-        self.z = d - 1 / 3 * x0
+            # Rest normal
+            if x_cur < a1:
+                res += (stammfunktion(a1) - stammfunktion(x_cur))
+
+            return res
+
+        # =========================
+        # Vuncr (Schubkraft, SCPT)
+        # =========================
+        L = x0 + x1
+        denom = (x1 ** 2 - x0 ** 2)
+
+        # Stammfunktion von tau_ref(x) = tau0/(x1^2-x0^2) * (x^2 - 2*x0*x)
+        def F_tau(x):
+            return (tau0 / denom) * (x ** 3 / 3.0 - x0 * x ** 2)
+
+        self.Vuncr = b * integrate_with_layers(F_tau, 0.0, L)
+        self.zuncr = y1 / tan(beta1) + y2 / tan(beta2)
+
+        # =========================
+        # Fct (Zugkraft, linear über x1 ab x0)
+        # =========================
+        # sigma_ref(x) = sigmaX0*(x-x0)/x1  für x in [x0, x0+x1]
+        def F_sig_t(x):
+            return (sigmaX0 / (2.0 * x1)) * (x - x0) ** 2
+
+        if x1 > 0:
+            self.Fct = b * integrate_with_layers(F_sig_t, x0, x0 + x1)
+        else:
+            self.Fct = 0.0
+        self.zct = y1 + y2 + (1.0 / 3.0) * x1
+
+        # =========================
+        # Fcc (Druckkraft, linear über x0 ab Oberkante)
+        # =========================
+        # linearer Druckspannungsverlauf: sigma_c(0)=sigmaOK (oben), sigma_c(x0)=0 (NA)
+        sigmaOK = max([epsilonTop * Ec, -fcm])  # i.d.R. negativ (Druck)
+
+        # sigma_ref(x) = sigmaOK*(1 - x/x0)  für x in [0, x0]
+        # Stammfunktion:
+        # ∫ sigmaOK*(1 - x/x0) dx = sigmaOK*(x - x^2/(2*x0))
+        def F_sig_c(x):
+            return sigmaOK * (x - (x ** 2) / (2.0 * x0))
+
+        # Betrag, weil sigmaOK Druck (negativ) ist
+        self.Fcc = abs(b * integrate_with_layers(F_sig_c, 0.0, x0))
+
+        # Hebelarm Fcc
+        self.z = d - (1.0 / 3.0) * x0
 
 
         # Rissprozesszone
         #w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / sigma1
-        w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / fct
+        #w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / fct
+        w1 = (0.04 * fcm ** 0.18 * dag ** 0.32) / fct # mit Gf für 3D-Beton
+
         #self.Ffpz = b * y1 / sin(beta1) * sigma1 * w1 / wfpz * (1 - exp(- wfpz / w1))
-        self.Ffpz = b * y1 / sin(beta1) * fct * w1 / wfpz * (1 - exp(- wfpz / w1))
+        #self.Ffpz = b * y1 / sin(beta1) * fct * w1 / wfpz * (1 - exp(- wfpz / w1))
+
+        # Abminderungsfaktor nach Gl. (5-6): beta1 in [0, pi/2]
+        beta_p = 1.0 # Abminderungswert für 3D-Druck, ergibt sich aus dem Verhältnis zwischen der Zugfestigkeit der Grenzfläche und der Matrix #TEST wenn = 1.0 dann sollte sich nichts ändern (Test bestanden)
+        beta1_eff = min(max(beta1, 0.0), pi / 2.0)
+        alpha_p_fpz = 1.0 - (4.0 * (1.0 - beta_p) / (pi ** 2)) * (beta1_eff - pi / 2.0) ** 2
+
+        # Grundwert Ffpz
+        Ffpz_ref = b * y1 / sin(beta1) * fct * w1 / wfpz * (1 - exp(- wfpz / w1))
+
+        self.Ffpz = alpha_p_fpz * Ffpz_ref # Ffpz reduziert mit alpha_p_fpz
+
         self.Vfpz = cos(beta1) * self.Ffpz
         zfpz1 = y1 / sin(beta1) * (1 - w1 / wfpz * (1 - (1 + wfpz / w1) * exp(- wfpz / w1)) / (1 - exp(- wfpz / w1)))
         self.zfpz = zfpz1 + y2 / sin(beta2) * cos(beta2 - beta1)
@@ -67,7 +139,7 @@ class Konstitutiv:
         # Integration der Schubspannungen über die Risslänge
         tauAI = quad(tauAi, 0, 1, args=(fcm, delta, phi, r2, y2, beta2, dag))
         tauAI = tauAI[0]   # Erster Wert in Liste tauAI ist das korrekte Ergebnis für das Integral der Schubspannung
-        cf = 0.8
+        cf = 1.0
         #self.FaiPa = b * l2 * tauAI  # Parallel zum Riss wirkende Kraft
         self.FaiPa = cf * b * l2 * tauAI  # Parallel zum Riss wirkende Kraft, mit Reduktionsfaktor
 
@@ -115,7 +187,10 @@ class Konstitutiv:
 
         # Dübelwirkung
         bn = b - n * ds  # Breite des Betonquerschnitts auf Höhe der Bewehrung, Vereinfachung: Einlagige Bewehrung mit nur einem Stabdurchmesser, evtl. später schon in DefVar zu definieren und hier als konkreten Wert übergeben bekommen
-        Vda0 = 1.64 * bn * ds * (fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
+        #Vda0 = 1.64 * bn * ds * (fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
+        alpha_p_vda = 0.75 # Reduktion der Dübelwirkung für 3D-Druck
+        Vda0 = 1.64 * bn * ds * (alpha_p_vda * fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
+
         # Entscheidungsfunktion zur Bestimmung der aufgenommenen Querkraft in Abhängigkeit von deltaK
         self.Vda = None  # resultierende aufgenommene Querkraft in Abhängigkeit von deltaK
         if deltaK < 0.05:

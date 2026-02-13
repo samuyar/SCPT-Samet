@@ -26,17 +26,22 @@ class Rissfortschritt:
         #Fügt den Boolean von interlayer_status hinzu
         self.interlayer_status = interlayer_status
 
-        # wenn interlayer_status == True, dann Interlayer Werte einfügen (erstmal Reduzierung um 10%)
-        if self.interlayer_status:
-            fcm = 1.0 * fcm
-            fct = 1.0 * fct
-            Ec = 1.0 * Ec
+        # tau Grenze für Interlayer
+        tau_limit = 2.5  # [N/mm²] Beispielwert
+
+        # Reduktionsfaktor für 3D-gedruckten Beton. Annahme eines homogenen Querschnitts.
+        alpha_p = 1/1 # Reduktion der Drucktragfähigkeit
+        beta_p = 1/1 # Reduktion der Zugtragfähigkeit
 
         # Entscheidungfunktion zur Bestimmung von sigma1 in Abhängigkeit von der Lage der Rissspitze (Kupfer'sches Bruchkiterium)
-        self.sigma1 = ((1 + 0.8 * sigmaZ0 / fcm * (1 + 1 / (tan(beta) ** 2))) / (
-                    1 + 0.8 * fct / (fcm * (tan(beta) ** 2)))) * fct  # Hauptspannung 1 - [N/mm²]
-        if self.sigma1 > fct:
-            self.sigma1 = fct
+        #self.sigma1 = ((1 + 0.8 * sigmaZ0 / fcm * (1 + 1 / (tan(beta) ** 2))) / (
+        #            1 + 0.8 * fct / (fcm * (tan(beta) ** 2)))) * fct  # Hauptspannung 1 - [N/mm²]
+        #if self.sigma1 > fct:
+        #    self.sigma1 = fct
+        self.sigma1 = ((1 + 0.8 * sigmaZ0 / (alpha_p * fcm) * (1 + 1 / (tan(beta) ** 2))) / (
+                    1 + 0.8 * (beta_p * fct) / ((alpha_p * fcm) * (tan(beta) ** 2)))) * (beta_p * fct)  # Hauptspannung 1 - [N/mm²]
+        if self.sigma1 > (beta_p * fct):
+            self.sigma1 = (beta_p * fct)
 
         self.sigmaX0 = self.sigma1 * (1 - 1 / (tan(beta)) ** 2) + sigmaZ0 / (tan(
             beta) ** 2)  # Berechnung der Spannungen an der Rissspitze in X-Richtung mittels der Hauptspannung sigma1
@@ -44,6 +49,12 @@ class Rissfortschritt:
         self.x1 = scr * self.sigmaX0 / (phi * Ec)
 
         self.tau0 = (self.sigma1 - sigmaZ0) / tan(beta)  # Schubspannung an Rissspitze - [N/mm²]
+
+        # Abbruchkriterium für Interlayer
+        if self.interlayer_status and self.tau0 > tau_limit:
+            raise RuntimeError(
+                f"Rissfortschritt abgebrochen: tau0={self.tau0:.3f} > tau_limit={tau_limit:.3f} bei Interlayer."
+            )
 
         self.sigma2 = -self.tau0 / tan(beta) + sigmaZ0  # Hauptspannung 2 - [N/mm²]
 
