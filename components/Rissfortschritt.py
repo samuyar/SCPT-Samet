@@ -51,10 +51,10 @@ class Rissfortschritt:
         self.tau0 = (self.sigma1 - sigmaZ0) / tan(beta)  # Schubspannung an Rissspitze - [N/mm²]
 
         # Abbruchkriterium für Interlayer
-        if self.interlayer_status and self.tau0 > tau_limit:
-            raise RuntimeError(
-                f"Rissfortschritt abgebrochen: tau0={self.tau0:.3f} > tau_limit={tau_limit:.3f} bei Interlayer."
-            )
+        #if self.interlayer_status and self.tau0 > tau_limit:
+        #    raise RuntimeError(
+        #        f"Rissfortschritt abgebrochen: tau0={self.tau0:.3f} > tau_limit={tau_limit:.3f} bei Interlayer."
+        #    )
 
         self.sigma2 = -self.tau0 / tan(beta) + sigmaZ0  # Hauptspannung 2 - [N/mm²]
 
