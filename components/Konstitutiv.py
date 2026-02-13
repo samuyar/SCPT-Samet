@@ -81,6 +81,7 @@ class Konstitutiv:
             self.Fct = b * integrate_with_layers(F_sig_t, a, bnd)
         else:
             self.Fct = -b * integrate_with_layers(F_sig_t, bnd, a)
+        self.zct = y1 + y2 + (1.0 / 3.0) * x1
 
         # =========================
         # Fcc (Druckkraft, linear über x0 ab Oberkante)
