@@ -12,7 +12,7 @@ class Konstitutiv:
         # =========================
         p = 15.0  # Abstand der Grenzschichtmitten [mm]
         t = 2.0  # Grenzschichtdicke [mm]
-        eta = 1.0  # Reduktionsfaktor der Steifigkeit (E-Modul) in Grenzschicht #TEST wenn eta = 1.0, dann sollte es keine Unterschiede geben! (Ja, test passt!)
+        eta_inter = 1.0  # Reduktionsfaktor der Steifigkeit (E-Modul) in Interlayer #TEST wenn eta = 1.0, dann sollte es keine Unterschiede geben! (Ja, test passt!)
 
         def integrate_with_layers(stammfunktion, a0, a1):
             """
@@ -42,7 +42,7 @@ class Konstitutiv:
 
                 # Grenzschichtbereich
                 if bb > aa:
-                    res += eta * (stammfunktion(bb) - stammfunktion(aa))
+                    res += eta_inter * (stammfunktion(bb) - stammfunktion(aa))
 
                 x_cur = max(x_cur, bb)
                 k += 1
@@ -100,8 +100,8 @@ class Konstitutiv:
 
         # Rissprozesszone
         #w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / sigma1
-        #w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / fct
-        w1 = (0.04 * fcm ** 0.18 * dag ** 0.32) / fct # mit Gf für 3D-Beton
+        w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / fct
+        #w1 = (0.04 * fcm ** 0.18 * dag ** 0.32) / fct # mit Gf für 3D-Beton
 
         #self.Ffpz = b * y1 / sin(beta1) * sigma1 * w1 / wfpz * (1 - exp(- wfpz / w1))
         #self.Ffpz = b * y1 / sin(beta1) * fct * w1 / wfpz * (1 - exp(- wfpz / w1))
@@ -188,7 +188,7 @@ class Konstitutiv:
         # Dübelwirkung
         bn = b - n * ds  # Breite des Betonquerschnitts auf Höhe der Bewehrung, Vereinfachung: Einlagige Bewehrung mit nur einem Stabdurchmesser, evtl. später schon in DefVar zu definieren und hier als konkreten Wert übergeben bekommen
         #Vda0 = 1.64 * bn * ds * (fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
-        alpha_p_vda = 0.75 # Reduktion der Dübelwirkung für 3D-Druck
+        alpha_p_vda = 1.0 # Reduktion der Dübelwirkung für 3D-Druck
         Vda0 = 1.64 * bn * ds * (alpha_p_vda * fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
 
         # Entscheidungsfunktion zur Bestimmung der aufgenommenen Querkraft in Abhängigkeit von deltaK
