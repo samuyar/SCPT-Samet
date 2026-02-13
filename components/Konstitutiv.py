@@ -73,11 +73,14 @@ class Konstitutiv:
         def F_sig_t(x):
             return (sigmaX0 / (2.0 * x1)) * (x - x0) ** 2
 
-        if x1 > 0:
-            self.Fct = b * integrate_with_layers(F_sig_t, x0, x0 + x1)
+        a = x0
+        bnd = x0 + x1
+
+        # Integral zulassen, auch wenn bnd < a (negative Zugkraft, mechanisch trotzdem ok, daher die Fallbeschreibung)
+        if bnd >= a:
+            self.Fct = b * integrate_with_layers(F_sig_t, a, bnd)
         else:
-            self.Fct = 0.0
-        self.zct = y1 + y2 + (1.0 / 3.0) * x1
+            self.Fct = -b * integrate_with_layers(F_sig_t, bnd, a)
 
         # =========================
         # Fcc (Druckkraft, linear über x0 ab Oberkante)
