@@ -30,8 +30,8 @@ class Rissfortschritt:
         tau_limit = 2.5  # [N/mm²] Beispielwert
 
         # Reduktionsfaktor für 3D-gedruckten Beton. Annahme eines homogenen Querschnitts.
-        alpha_p = 1/1 # Reduktion der Drucktragfähigkeit
-        beta_p = 1/1 # Reduktion der Zugtragfähigkeit
+        alpha_p = 1/1.04 # Reduktion der Drucktragfähigkeit
+        beta_p = 1/1.25  # Reduktion der Zugtragfähigkeit
 
         # Entscheidungfunktion zur Bestimmung von sigma1 in Abhängigkeit von der Lage der Rissspitze (Kupfer'sches Bruchkiterium)
         #self.sigma1 = ((1 + 0.8 * sigmaZ0 / fcm * (1 + 1 / (tan(beta) ** 2))) / (

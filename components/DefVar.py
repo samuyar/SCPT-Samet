@@ -28,9 +28,9 @@ class DefVar:
     def getD(self):
         return self.d
 
-    lambdaCS = 2.73  # Ort des erzeugten Risses
+    lambdaCS = 1.52  # Ort des erzeugten Risses
 
-    b = 100  # Breite [mm]
+    b = 95  # Breite [mm]
 
     def getB(self):
         return self.b
