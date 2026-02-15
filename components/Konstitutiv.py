@@ -12,7 +12,7 @@ class Konstitutiv:
         # =========================
         p = 15.0  # Abstand der Grenzschichtmitten [mm]
         t = 2.0  # Grenzschichtdicke [mm]
-        eta_inter = 0.8  # Reduktionsfaktor der Steifigkeit (E-Modul) in Interlayer #TEST wenn eta = 1.0, dann sollte es keine Unterschiede geben! (Ja, test passt!)
+        eta_inter = 0.95  # Reduktionsfaktor der Steifigkeit (E-Modul) in Interlayer #TEST wenn eta = 1.0, dann sollte es keine Unterschiede geben! (Ja, test passt!)
 
         def integrate_with_layers(stammfunktion, a0, a1):
             """
@@ -69,36 +69,30 @@ class Konstitutiv:
         # =========================
         # Fct (Zugkraft, linear über x1 ab x0)
         # =========================
-        # sigma_ref(x) = sigmaX0*(x-x0)/x1  für x in [x0, x0+x1]
         def F_sig_t(x):
             return (sigmaX0 / (2.0 * x1)) * (x - x0) ** 2
 
         a = x0
         bnd = x0 + x1
 
-        # Integral zulassen, auch wenn bnd < a (negative Zugkraft, mechanisch trotzdem ok, daher die Fallbeschreibung)
         if bnd >= a:
-            self.Fct = b * integrate_with_layers(F_sig_t, a, bnd)
+            self.Fct = b * (F_sig_t(bnd) - F_sig_t(a))
         else:
-            self.Fct = -b * integrate_with_layers(F_sig_t, bnd, a)
+            self.Fct = -b * (F_sig_t(a) - F_sig_t(bnd))
+
         self.zct = y1 + y2 + (1.0 / 3.0) * x1
 
         # =========================
         # Fcc (Druckkraft, linear über x0 ab Oberkante)
         # =========================
-        # linearer Druckspannungsverlauf: sigma_c(0)=sigmaOK (oben), sigma_c(x0)=0 (NA)
-        sigmaOK = max([epsilonTop * Ec, -fcm])  # i.d.R. negativ (Druck)
+        sigmaOK = max([epsilonTop * Ec, -fcm])
 
-        # sigma_ref(x) = sigmaOK*(1 - x/x0)  für x in [0, x0]
-        # Stammfunktion:
-        # ∫ sigmaOK*(1 - x/x0) dx = sigmaOK*(x - x^2/(2*x0))
         def F_sig_c(x):
             return sigmaOK * (x - (x ** 2) / (2.0 * x0))
 
-        # Betrag, weil sigmaOK Druck (negativ) ist
-        self.Fcc = abs(b * integrate_with_layers(F_sig_c, 0.0, x0))
+        self.Fcc = abs(b * (F_sig_c(x0) - F_sig_c(0.0)))
 
-        # Hebelarm Fcc
+        # Hebelarm
         self.z = d - (1.0 / 3.0) * x0
 
 
@@ -111,7 +105,7 @@ class Konstitutiv:
         #self.Ffpz = b * y1 / sin(beta1) * fct * w1 / wfpz * (1 - exp(- wfpz / w1))
 
         # Abminderungsfaktor nach Gl. (5-6): beta1 in [0, pi/2]
-        beta_p = 1/1.25 # Abminderungswert für 3D-Druck, ergibt sich aus dem Verhältnis zwischen der Zugfestigkeit der Grenzfläche und der Matrix #TEST wenn = 1.0 dann sollte sich nichts ändern (Test bestanden)
+        beta_p = 1/1 # Abminderungswert für 3D-Druck, ergibt sich aus dem Verhältnis zwischen der Zugfestigkeit der Grenzfläche und der Matrix #TEST wenn = 1.0 dann sollte sich nichts ändern (Test bestanden)
         beta1_eff = min(max(beta1, 0.0), pi / 2.0)
         alpha_p_fpz = 1.0 - (4.0 * (1.0 - beta_p) / (pi ** 2)) * (beta1_eff - pi / 2.0) ** 2
 
@@ -192,7 +186,7 @@ class Konstitutiv:
         # Dübelwirkung
         bn = b - n * ds  # Breite des Betonquerschnitts auf Höhe der Bewehrung, Vereinfachung: Einlagige Bewehrung mit nur einem Stabdurchmesser, evtl. später schon in DefVar zu definieren und hier als konkreten Wert übergeben bekommen
         #Vda0 = 1.64 * bn * ds * (fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
-        alpha_p_vda = 0.85 # Reduktion der Dübelwirkung für 3D-Druck
+        alpha_p_vda = 1 # Reduktion der Dübelwirkung für 3D-Druck
         Vda0 = 1.64 * bn * ds * (alpha_p_vda * fcm) ** (1 / 3)  # maximal aufnehmbare Querkraft durch Dübelwirkung
 
         # Entscheidungsfunktion zur Bestimmung der aufgenommenen Querkraft in Abhängigkeit von deltaK
