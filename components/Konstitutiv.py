@@ -67,34 +67,39 @@ class Konstitutiv:
         self.zuncr = y1 / tan(beta1) + y2 / tan(beta2)
 
         # =========================
-        # Fct (Zugkraft, linear über x1 ab x0)
+        # Fct (Zugkraft, linear über x1 ab x0)  MIT eta_inter
         # =========================
+        # sigma_ref(x) = sigmaX0*(x-x0)/x1  für x in [x0, x0+x1]
+        # Stammfunktion: ∫ sigma_ref dx = sigmaX0/(2*x1) * (x-x0)^2
         def F_sig_t(x):
             return (sigmaX0 / (2.0 * x1)) * (x - x0) ** 2
 
         a = x0
         bnd = x0 + x1
 
+        # signed Integral über [min,max], Vorzeichen wie vorher über den Fall bnd<a
         if bnd >= a:
-            self.Fct = b * (F_sig_t(bnd) - F_sig_t(a))
+            self.Fct = b * integrate_with_layers(F_sig_t, a, bnd)
         else:
-            self.Fct = -b * (F_sig_t(a) - F_sig_t(bnd))
+            self.Fct = -b * integrate_with_layers(F_sig_t, bnd, a)
 
         self.zct = y1 + y2 + (1.0 / 3.0) * x1
 
         # =========================
-        # Fcc (Druckkraft, linear über x0 ab Oberkante)
+        # Fcc (Druckkraft, linear über x0 ab Oberkante)  MIT eta_inter
         # =========================
-        sigmaOK = max([epsilonTop * Ec, -fcm])
+        sigmaOK = max(epsilonTop * Ec, -fcm)  # i.d.R. negativ (Druck)
 
+        # sigma_ref(x) = sigmaOK*(1 - x/x0)  für x in [0, x0]
+        # Stammfunktion: ∫ sigmaOK*(1-x/x0) dx = sigmaOK*(x - x^2/(2*x0))
         def F_sig_c(x):
             return sigmaOK * (x - (x ** 2) / (2.0 * x0))
 
-        self.Fcc = abs(b * (F_sig_c(x0) - F_sig_c(0.0)))
+        # Betrag, weil sigmaOK i.d.R. negativ ist
+        self.Fcc = abs(b * integrate_with_layers(F_sig_c, 0.0, x0))
 
-        # Hebelarm
+        # Hebelarm Fcc
         self.z = d - (1.0 / 3.0) * x0
-
 
         # Rissprozesszone
         #w1 = (0.028 * fcm ** 0.18 * dag ** 0.32) / sigma1
