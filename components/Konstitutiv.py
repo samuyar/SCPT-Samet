@@ -67,7 +67,7 @@ class Konstitutiv:
         self.zuncr = y1 / tan(beta1) + y2 / tan(beta2)
 
         # =========================
-        # Fct (Zugkraft, linear über x1 ab x0)  MIT eta_inter
+        # Fct (Zugkraft, linear über x1 ab x0)
         # =========================
         # sigma_ref(x) = sigmaX0*(x-x0)/x1  für x in [x0, x0+x1]
         # Stammfunktion: ∫ sigma_ref dx = sigmaX0/(2*x1) * (x-x0)^2
@@ -86,7 +86,7 @@ class Konstitutiv:
         self.zct = y1 + y2 + (1.0 / 3.0) * x1
 
         # =========================
-        # Fcc (Druckkraft, linear über x0 ab Oberkante)  MIT eta_inter
+        # Fcc (Druckkraft, linear über x0 ab Oberkante)
         # =========================
         sigmaOK = max(epsilonTop * Ec, -fcm)  # i.d.R. negativ (Druck)
 

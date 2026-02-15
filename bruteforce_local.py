@@ -503,7 +503,25 @@ def opti():
     temp = Temp(def_var.yvor, def_var.y1vor, def_var.y2vor, def_var.betavor, def_var.beta1vor, def_var.beta2vor)
 
     x_list = [
-                def_var.d * 0.620, #def_var.d * 0.618, def_var.d * 0.616, def_var.d * 0.614, def_var.d * 0.612,
+                def_var.d * 0.625, def_var.d * 0.624, def_var.d * 0.623, def_var.d * 0.622, def_var.d * 0.621,
+                def_var.d * 0.620, def_var.d * 0.619, def_var.d * 0.618, def_var.d * 0.617, def_var.d * 0.616,
+                def_var.d * 0.615, def_var.d * 0.614, def_var.d * 0.613, def_var.d * 0.612, def_var.d * 0.611,
+                def_var.d * 0.610, def_var.d * 0.609, def_var.d * 0.608, def_var.d * 0.607, def_var.d * 0.606,
+                def_var.d * 0.605, def_var.d * 0.604, def_var.d * 0.603, def_var.d * 0.602, def_var.d * 0.601,
+                def_var.d * 0.600, def_var.d * 0.599, def_var.d * 0.598, def_var.d * 0.597, def_var.d * 0.596,
+                def_var.d * 0.595, def_var.d * 0.594, def_var.d * 0.593, def_var.d * 0.592, def_var.d * 0.591,
+                def_var.d * 0.590, def_var.d * 0.589, def_var.d * 0.588, def_var.d * 0.587, def_var.d * 0.586,
+                def_var.d * 0.585, def_var.d * 0.584, def_var.d * 0.583, def_var.d * 0.582, def_var.d * 0.581,
+                def_var.d * 0.580, def_var.d * 0.579, def_var.d * 0.578, def_var.d * 0.577, def_var.d * 0.576,
+                def_var.d * 0.575, def_var.d * 0.574, def_var.d * 0.573, def_var.d * 0.572, def_var.d * 0.571,
+                def_var.d * 0.570, def_var.d * 0.569, def_var.d * 0.568, def_var.d * 0.567, def_var.d * 0.566,
+                def_var.d * 0.565, def_var.d * 0.564, def_var.d * 0.563, def_var.d * 0.562, def_var.d * 0.561,
+                def_var.d * 0.560, def_var.d * 0.559, def_var.d * 0.558, def_var.d * 0.557, def_var.d * 0.556,
+                def_var.d * 0.555, def_var.d * 0.554, def_var.d * 0.553, def_var.d * 0.552, def_var.d * 0.551,
+                def_var.d * 0.550,
+
+
+                #def_var.d * 0.620, def_var.d * 0.618, def_var.d * 0.616, def_var.d * 0.614, def_var.d * 0.612,
                 #def_var.d * 0.610, def_var.d * 0.608, def_var.d * 0.606, def_var.d * 0.604, def_var.d * 0.602,
                 #def_var.d * 0.600, def_var.d * 0.598, def_var.d * 0.596, def_var.d * 0.594, def_var.d * 0.592,
                 #def_var.d * 0.590, def_var.d * 0.588, def_var.d * 0.586, def_var.d * 0.584, def_var.d * 0.582,
