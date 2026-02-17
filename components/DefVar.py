@@ -10,7 +10,7 @@ class DefVar:
     lSpann = 1440  # Angabe der Spannweite (Mitte Auflager bis Mitte Auflager) [mm]
 
     #a = lSpann / 2  # Halbe Spannweite, evtl. später in Controller direkt oder in Modul Gleichgewicht berechnen?
-    a = 720
+    a = 600
 
     F = 0  # Einwirkende Einzellast
 
@@ -28,19 +28,19 @@ class DefVar:
     def getD(self):
         return self.d
 
-    lambdaCS = 1.52  # Ort des erzeugten Risses
+    lambdaCS = 1.22  # Ort des erzeugten Risses
 
-    b = 95  # Breite [mm]
+    b = 120  # Breite [mm]
 
     def getB(self):
         return self.b
 
-    h = 210  # Höhe [mm]
+    h = 200  # Höhe [mm]
 
     def getH(self):
         return self.h
 
-    fcm = 54.02  # mittlere Betondruckfestigkeit [N/mm²]
+    fcm = 41.9  # mittlere Betondruckfestigkeit [N/mm²]
 
     def getFcm(self):
         return self.fcm
@@ -48,7 +48,7 @@ class DefVar:
     #fct = 0.3 * (fcm - 4) ** (
     #        2 / 3)  # Betonzugfestigkeit aus Betondruckfestigkeit berechnet [N/mm²], evtl. später vom Nutzer auswählabr ob berechneter Wert oder experimentell bestimmter Wert
 
-    fct = 3.03
+    fct = 3.2
 
     def getFct(self):
         return self.fct
@@ -56,17 +56,17 @@ class DefVar:
     #Ec = 22000 * (
     #        0.1 * fcm) ** 0.3  # mittlerer E-Modul aus Betondruckfestigkeit berechnet [N/mm²], evtl später vom Nutzer auswählbar ob berechneter Wert oder experimentell bestimmter Wert
 
-    Ec = 22734
+    Ec = 25600
 
     def getEc(self):
         return self.Ec
 
-    Es = 198800
+    Es = 200000
 
     def getEs(self):
         return self.Es
 
-    fy = 575  # Streckgrenze der Bewehrung [N/mm²]
+    fy = 400  # Streckgrenze der Bewehrung [N/mm²]
 
     def getFy(self):
         return self.fy
@@ -96,7 +96,7 @@ class DefVar:
     def getRhol(self):
         return self.rhol
 
-    ds = 16  # Stabdurchmesser [mm]
+    ds = 8  # Stabdurchmesser [mm]
 
     def getDs(self):
         return self.ds
