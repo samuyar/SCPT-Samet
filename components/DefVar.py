@@ -7,7 +7,7 @@ class DefVar:
     Bisherige Vereinfachung: Einlagige Bewehrung
     """
     # Angaben zum System, Geometrische Grunddaten, Materialkennwerte, Angaben zur Bewehrung und Verhältniswert des Risses
-    lSpann = 1440  # Angabe der Spannweite (Mitte Auflager bis Mitte Auflager) [mm]
+    lSpann = 1200  # Angabe der Spannweite (Mitte Auflager bis Mitte Auflager) [mm]
 
     #a = lSpann / 2  # Halbe Spannweite, evtl. später in Controller direkt oder in Modul Gleichgewicht berechnen?
     a = 600
